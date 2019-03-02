@@ -27,7 +27,7 @@ savjeeCoin.addTransaction(tx1);
 savjeeCoin.minePendingTransactions(myWalletAddress);
 
 // Create second transaction
-const tx2 = new Transaction(myWalletAddress, organizerWalletAddress, 50);
+const tx2 = new Transaction(myWalletAddress, organizerWalletAddress, -50);
 tx2.signTransaction(myKey);
 savjeeCoin.addTransaction(tx2);
 const tx3 = new Transaction(organizerWalletAddress, myWalletAddress, 100);
