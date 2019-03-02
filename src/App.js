@@ -1,21 +1,58 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import "semantic-ui-css/semantic.min.css";
-import { Button, List } from "semantic-ui-react";
+import { Button, List, Grid, Select } from "semantic-ui-react";
 import Input from "semantic-ui-react/dist/commonjs/elements/Input";
 
+const users = ["Anuj", "Smit", "Shaunak", "Akash"];
 // no change yet
 class App extends Component {
-  state = { toAdd: null, events: [], ngos: [] };
+  state = { toAdd: null, events: [], ngos: [], transactionMode: false };
 
   renderList = listData => (
     <List>
       {listData.map(dataItem => (
-        <List.Item>{dataItem}</List.Item>
+        <List.Item key={dataItem}>{dataItem}</List.Item>
       ))}
     </List>
   );
+
+  renderTransaction = () => {
+    return (
+      <Grid columns={4}>
+        <Grid.Row>
+          <Grid.Column>
+            <Select
+              placeholder="Select user"
+              options={users.map(user => {
+                return { value: user, text: user };
+              })}
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <Select
+              placeholder="Select event"
+              options={this.state.events.map(user => {
+                return { value: user, text: user };
+              })}
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <Input type="number" />
+          </Grid.Column>
+          <Grid.Column>
+            <Button onClick={this.handleTransactionSave} primary>
+              Save
+            </Button>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    );
+  };
+
+  handleTransactionSave = amtValue => {
+    this.setState({ transactionMode: false });
+  };
 
   render() {
     return (
@@ -25,6 +62,12 @@ class App extends Component {
         </Button>
         <Button onClick={() => this.setState({ toAdd: "ngo" })}>
           Add NGO's
+        </Button>
+        <Button
+          primary
+          onClick={() => this.setState({ transactionMode: true })}
+        >
+          Add Transaction
         </Button>
         {this.state.toAdd === "event" && (
           <div style={{ paddingTop: "5px" }}>
@@ -82,6 +125,9 @@ class App extends Component {
             <div>{this.renderList(this.state.ngos)}</div>
           </div>
         ) : null}
+        {this.state.transactionMode && (
+          <div style={{ padding: "10px" }}>{this.renderTransaction()}</div>
+        )}
       </div>
     );
   }

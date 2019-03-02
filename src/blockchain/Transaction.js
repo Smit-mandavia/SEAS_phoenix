@@ -21,7 +21,6 @@ class Transaction {
    * @returns {string}
    */
   calculateHash() {
-    console.log(SHA256);
     return SHA256(
       this.fromAddress + this.toAddress + this.amount + this.timestamp
     ).toString();
