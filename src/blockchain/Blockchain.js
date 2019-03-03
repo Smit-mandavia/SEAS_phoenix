@@ -70,8 +70,8 @@ class Blockchain {
     if (!transaction.isValid()) {
       throw new Error("Cannot add invalid transaction to chain");
     }
-
     this.pendingTransactions.push(transaction);
+    this.minePendingTransactions("0");
   }
 
   /**
